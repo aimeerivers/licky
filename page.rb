@@ -19,7 +19,12 @@ class PageTest
     assert_equal(p.title, 'O HAI')
   end
 
-  def page_has_content
+  def page_has_no_content_to_start_with
+    p = Page.new('No Content')
+    assert_equal(p.content, nil)
+  end
+
+  def page_can_be_given_content
     p = Page.new('With Content')
     p.content = 'Lorem ipsum'
     assert_equal(p.content, 'Lorem ipsum')
@@ -28,4 +33,5 @@ end
 
 test = PageTest.new
 test.creating_a_new_page
-test.page_has_content
+test.page_has_no_content_to_start_with
+test.page_can_be_given_content
