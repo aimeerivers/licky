@@ -9,8 +9,8 @@ end
 
 class PageTest
 
-  def assert_equal(first, second)
-    puts first == second
+  def assert_equal(actual, expected)
+    puts actual == expected
   end
 
   def creating_a_new_page
