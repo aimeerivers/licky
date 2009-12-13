@@ -8,14 +8,20 @@ class Page
 
 end
 
+class PageFactory
+  def self.find_or_create(title)
+    Page.new(title)
+  end
+end
+
 class PageTest
 
   def assert_equal(actual, expected)
     puts actual == expected
   end
 
-  def creating_a_new_page
-    p = Page.new('O HAI')
+  def creating_a_new_page_using_the_factory
+    p = PageFactory.find_or_create('O HAI')
     assert_equal(p.title, 'O HAI')
   end
 
@@ -32,6 +38,6 @@ class PageTest
 end
 
 test = PageTest.new
-test.creating_a_new_page
+test.creating_a_new_page_using_the_factory
 test.page_has_no_content_to_start_with
 test.page_can_be_given_content
