@@ -26,12 +26,12 @@ class PageTest
   end
 
   def page_has_no_content_to_start_with
-    p = Page.new('No Content')
+    p = PageFactory.find_or_create('No Content')
     assert_equal(p.content, nil)
   end
 
   def page_can_be_given_content
-    p = Page.new('With Content')
+    p = PageFactory.find_or_create('With Content')
     p.content = 'Lorem ipsum'
     assert_equal(p.content, 'Lorem ipsum')
   end
