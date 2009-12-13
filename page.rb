@@ -14,7 +14,7 @@ class PageFactory
   end
 
   def self.filename_for(title)
-    title.gsub(' ', '_') + '.txt'
+    title.gsub(/\s/, '_') + '.txt'
   end
 end
 
@@ -57,6 +57,11 @@ class PageFactoryTest
     assert_equal(filename, 'Two_Words.txt')
   end
 
+  def figuring_out_filename_with_more_than_one_space
+    filename = PageFactory.filename_for('Three Little     Words')
+    assert_equal(filename, 'Three_Little_Words.txt')
+  end
+
 end
 
 
@@ -68,3 +73,4 @@ test.page_can_be_given_content
 test = PageFactoryTest.new
 test.figuring_out_filename_with_just_one_word
 test.figuring_out_filename_with_more_than_one_word
+test.figuring_out_filename_with_more_than_one_space
