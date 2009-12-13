@@ -14,7 +14,7 @@ class PageFactory
   end
 
   def self.filename_for(title)
-    title.gsub(/\s/, '_') + '.txt'
+    title.gsub(/\s+/, '_') + '.txt'
   end
 end
 
