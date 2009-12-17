@@ -4,7 +4,8 @@ class PageFactory
   @@pages = {}
 
   def self.find_or_create(title)
-    page_content = @@pages[filename_for(title)]
+    filename = filename_for(title)
+    page_content = File.read("pages/#{filename}") if File.exists?("pages/#{filename}")
     Page.new(title, page_content)
   end
 

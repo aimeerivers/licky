@@ -60,6 +60,15 @@ class PageFactoryTest
     end
   end
 
+  def page_content_is_read_from_the_file
+    delete_file('pages/Ruby_Docs.txt')
+    File.open('pages/Ruby_Docs.txt', 'w') do |f|
+      f.write('Cool stuff contained here')
+    end
+    page = PageFactory.find_or_create('Ruby Docs')
+    assert_equal(page.content, 'Cool stuff contained here')
+  end
+
   private
 
   def delete_file(filename)

@@ -14,3 +14,4 @@ test.saving_a_page_and_retrieving_it_again
 test.saving_multiple_pages
 test.page_is_saved_to_the_file_system
 test.page_content_is_written_to_the_file
+test.page_content_is_read_from_the_file
