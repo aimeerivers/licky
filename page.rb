@@ -17,6 +17,10 @@ class PageFactory
     Page.new(title, page_content)
   end
 
+  def self.save_page(page)
+    @@pages[filename_for(page.title)] = page.content
+  end
+
   def self.filename_for(title)
     title.gsub(/\s+/, '_') + '.txt'
   end
@@ -70,6 +74,13 @@ class PageFactoryTest
     assert_equal(filename, 'Three_Little_Words.txt')
   end
 
+  def saving_a_page_and_retrieving_it_again
+    page = PageFactory.find_or_create('Nice Day')
+    page.content = 'Today is a lovely day'
+    PageFactory.save_page(page)
+    page = PageFactory.find_or_create('Nice Day')
+    assert_equal(page.content, 'Today is a lovely day')
+  end
 end
 
 
@@ -82,3 +93,4 @@ test = PageFactoryTest.new
 test.figuring_out_filename_with_just_one_word
 test.figuring_out_filename_with_more_than_one_word
 test.figuring_out_filename_with_more_than_one_space
+test.saving_a_page_and_retrieving_it_again
