@@ -43,7 +43,7 @@ class PageFactoryTest
     assert_equal(page.content, "Tuesday's child is full of grace")
   end
 
-  def page_is_saved_to_the_file_system
+  def page_is_created_in_the_file_system
     delete_file('pages/Filesystem.txt')
     page = PageFactory.find_or_create('Filesystem')
     PageFactory.save_page(page)
