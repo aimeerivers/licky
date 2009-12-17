@@ -50,6 +50,16 @@ class PageFactoryTest
     assert_true(File.exists?('pages/Filesystem.txt'))
   end
 
+  def page_content_is_written_to_the_file
+    delete_file('pages/File_contents.txt')
+    page = PageFactory.find_or_create('File contents')
+    page.content = 'Woohoo'
+    PageFactory.save_page(page)
+    File.open('pages/File_contents.txt', 'r') do |f|
+      assert_equal(f.read, 'Woohoo')
+    end
+  end
+
   private
 
   def delete_file(filename)
