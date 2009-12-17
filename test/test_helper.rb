@@ -6,4 +6,8 @@ module TestHelper
       puts "Received ---> #{actual}"
     end
   end
+
+  def assert_true(assertion)
+    assert_equal(assertion, true)
+  end
 end

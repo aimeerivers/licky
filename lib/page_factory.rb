@@ -9,7 +9,11 @@ class PageFactory
   end
 
   def self.save_page(page)
-    @@pages[filename_for(page.title)] = page.content
+    filename = filename_for(page.title)
+    @@pages[filename] = page.content
+    File.open("pages/#{filename}", 'w') do |f|
+      f.write(page.content)
+    end
   end
 
   def self.filename_for(title)

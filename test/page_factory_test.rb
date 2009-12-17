@@ -42,4 +42,17 @@ class PageFactoryTest
     page = PageFactory.find_or_create('Tuesday')
     assert_equal(page.content, "Tuesday's child is full of grace")
   end
+
+  def page_is_saved_to_the_file_system
+    delete_file('pages/Filesystem.txt')
+    page = PageFactory.find_or_create('Filesystem')
+    PageFactory.save_page(page)
+    assert_true(File.exists?('pages/Filesystem.txt'))
+  end
+
+  private
+
+  def delete_file(filename)
+    File.delete(filename) if File.exist?(filename)
+  end
 end
