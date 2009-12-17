@@ -2,15 +2,19 @@ class Page
   attr_reader :title
   attr_accessor :content
 
-  def initialize(title)
+  def initialize(title, content=nil)
     @title = title
+    @content = content
   end
 
 end
 
 class PageFactory
+  @@pages = {}
+
   def self.find_or_create(title)
-    Page.new(title)
+    page_content = @@pages[filename_for(title)]
+    Page.new(title, page_content)
   end
 
   def self.filename_for(title)
