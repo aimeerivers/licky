@@ -81,6 +81,22 @@ class PageFactoryTest
     page = PageFactory.find_or_create('Nice Day')
     assert_equal(page.content, 'Today is a lovely day')
   end
+
+  def saving_multiple_pages
+    page = PageFactory.find_or_create('Monday')
+    page.content = "Monday's child is fair of face"
+    PageFactory.save_page(page)
+
+    page = PageFactory.find_or_create('Tuesday')
+    page.content = "Tuesday's child is full of grace"
+    PageFactory.save_page(page)
+
+    page = PageFactory.find_or_create('Monday')
+    assert_equal(page.content, "Monday's child is fair of face")
+
+    page = PageFactory.find_or_create('Tuesday')
+    assert_equal(page.content, "Tuesday's child is full of grace")
+  end
 end
 
 
@@ -94,3 +110,4 @@ test.figuring_out_filename_with_just_one_word
 test.figuring_out_filename_with_more_than_one_word
 test.figuring_out_filename_with_more_than_one_space
 test.saving_a_page_and_retrieving_it_again
+test.saving_multiple_pages
