@@ -1,21 +1,26 @@
 require 'lib/page'
+require 'lib/page_factory'
 require 'test/test_helper'
 
 class PageTest
   include TestHelper
 
+  def initialize
+    @page_factory = PageFactory.new
+  end
+
   def creating_a_new_page_using_the_factory
-    p = PageFactory.find_or_create('O HAI')
+    p = @page_factory.find_or_create('O HAI')
     assert_equal(p.title, 'O HAI')
   end
 
   def page_has_no_content_to_start_with
-    p = PageFactory.find_or_create('No Content')
+    p = @page_factory.find_or_create('No Content')
     assert_equal(p.content, nil)
   end
 
   def page_can_be_given_content
-    p = PageFactory.find_or_create('With Content')
+    p = @page_factory.find_or_create('With Content')
     p.content = 'Lorem ipsum'
     assert_equal(p.content, 'Lorem ipsum')
   end
