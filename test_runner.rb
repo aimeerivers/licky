@@ -1,6 +1,8 @@
 require 'test/page_test'
 require 'test/page_factory_test'
 
+Dir.mkdir("pages") unless File.directory? "pages"
+
 test = PageTest.new
 test.creating_a_new_page_using_the_factory
 test.page_has_no_content_to_start_with
