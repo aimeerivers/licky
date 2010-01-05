@@ -6,7 +6,7 @@ class PageTest
   include TestHelper
 
   def initialize
-    @page_factory = PageFactory.new
+    @page_factory = PageFactory.new(PageFilePersistor.new('test_pages'))
   end
 
   def creating_a_new_page_using_the_factory

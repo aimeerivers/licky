@@ -1,21 +1,18 @@
 require 'lib/page'
+require 'lib/page_file_persistor'
 
 class PageFactory
 
+  def initialize(persistor=PageFilePersistor.new('pages'))
+    @persistor = persistor
+  end
+
   def find_or_create(title)
-    filename = filename_for(title)
-    page_content = File.read("pages/#{filename}") if File.exists?("pages/#{filename}")
-    Page.new(title, page_content)
+    Page.new(title, @persistor.find_or_create(title))
   end
 
   def save_page(page)
-    filename = filename_for(page.title)
-    File.open("pages/#{filename}", 'w') do |f|
-      f.write(page.content)
-    end
+    @persistor.save_page(page)
   end
 
-  def filename_for(title)
-    title.gsub(/\s+/, '_') + '.txt'
-  end
 end
