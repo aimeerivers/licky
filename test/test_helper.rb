@@ -10,4 +10,14 @@ module TestHelper
   def assert_true(assertion)
     assert_equal(assertion, true)
   end
+
+  def assert_contains(content, expected)
+    puts result = (content.include?(expected))
+    if !result
+      puts "Received ---> #{content}"
+      puts "Expected to contain ---> #{expected}"
+      puts "But did not"
+    end
+  end
+  
 end

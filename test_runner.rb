@@ -1,6 +1,4 @@
-require 'test/page_test'
-require 'test/page_file_persistor_test'
-require 'test/page_factory_test'
+Dir[File.dirname(__FILE__) + '/test/*.rb'].each {|file| require file }
 
 test = PageTest.new
 test.creating_a_new_page_using_the_factory
@@ -18,4 +16,8 @@ test.saving_multiple_pages
 test.page_is_created_in_the_file_system
 test.page_content_is_written_to_the_file
 test.page_content_is_read_from_the_file
+test.tear_down
+
+test = WebserverTest.new
+test.finding_a_static_page
 test.tear_down
