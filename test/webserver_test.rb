@@ -7,7 +7,7 @@ class WebserverTest
   include TestHelper
 
   def initialize
-    @port = 8080
+    @port = 8081
     @server = Webserver.new(@port)
     Thread.new { @server.start }
   end
@@ -17,8 +17,23 @@ class WebserverTest
     assert_contains(response.body, '<h1>Hello world</h1>')
   end
 
+  def parsing_page_title
+    assert_equal(Webserver.parse_title('/Test_page'), 'Test page')
+  end
+
+  def parsing_a_complex_page_title
+    assert_equal(Webserver.parse_title('/Ha_ha__/ha 24?! yay'), 'Ha ha ha 24 yay')
+  end
+
+  def displaying_title_on_the_page
+    response = get '/Test_page'
+    assert_contains(response.body, 'Test page')
+  end
+
   def tear_down
+    print 'cleaning up after webserver tests ... '
     @server.stop
+    puts 'finished'
   end
 
   private

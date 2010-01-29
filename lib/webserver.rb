@@ -2,19 +2,34 @@ require 'webrick'
 
 class Webserver
   include WEBrick
-  
 
-  def initialize(port_number)
-    helloworld = lambda do |request, response|
-      response['Content-Type'] = 'text/html'
-      response.body = %{
+  class HelloWorldServlet < HTTPServlet::AbstractServlet
+    def do_GET(request, response)
+      response.body = %Q{
         <html><body>
           <h1>Hello world</h1>
         </body></html>
       }
+      response['Content-Type'] = 'text/html'
     end
+  end
+
+  class WikiPageServlet < HTTPServlet::AbstractServlet
+    def do_GET(request, response)
+      page_title = Webserver.parse_title(request.path_info)
+      response.body = %Q{
+        <html><body>
+          <h1>#{page_title}</h1>
+        </body></html>
+      }
+      response['Content-Type'] = 'text/html'
+    end
+  end
+
+  def initialize(port_number)
     @server = WEBrick::HTTPServer.new(:Port => port_number)
-    @server.mount('/helloworld', HTTPServlet::ProcHandler.new(helloworld))
+    @server.mount('/helloworld', HelloWorldServlet)
+    @server.mount('/', WikiPageServlet)
     trap('INT') { stop }
   end
 
@@ -24,6 +39,10 @@ class Webserver
 
   def stop
     @server.shutdown
+  end
+  
+  def self.parse_title(title)
+    title.sub('/', '').gsub(/[^\da-zA-Z]+/, ' ')
   end
 
 end

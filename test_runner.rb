@@ -20,4 +20,7 @@ test.tear_down
 
 test = WebserverTest.new
 test.finding_a_static_page
+test.parsing_page_title
+test.parsing_a_complex_page_title
+test.displaying_title_on_the_page
 test.tear_down
