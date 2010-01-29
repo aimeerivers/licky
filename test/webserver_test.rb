@@ -10,6 +10,9 @@ class WebserverTest
     @port = 8081
     @server = Webserver.new(@port)
     Thread.new { @server.start }
+
+    @pages_directory = 'test_pages'
+    @page_factory = PageFactory.new(PageFilePersistor.new(@pages_directory))
   end
 
   def finding_a_static_page
@@ -30,8 +33,22 @@ class WebserverTest
     assert_contains(response.body, 'Test page')
   end
 
+  def displaying_content_for_existing_page
+    page = @page_factory.find_or_create('Monday')
+    page.content = "Monday's child is fair of face"
+    @page_factory.save_page(page)
+    response = get '/Monday'
+    assert_contains(response.body, page.content)
+  end
+
   def tear_down
     print 'cleaning up after webserver tests ... '
+
+    Dir.entries(@pages_directory).each do |filename|
+      File.delete(File.join(@pages_directory, filename)) if filename.length > 2
+    end
+    Dir.delete(@pages_directory)
+
     @server.stop
     puts 'finished'
   end

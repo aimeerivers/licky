@@ -17,9 +17,12 @@ class Webserver
   class WikiPageServlet < HTTPServlet::AbstractServlet
     def do_GET(request, response)
       page_title = Webserver.parse_title(request.path_info)
+      page_factory = PageFactory.new(PageFilePersistor.new('test_pages'))
+      page = page_factory.find_or_create(page_title)
       response.body = %Q{
         <html><body>
           <h1>#{page_title}</h1>
+          <p>#{page.content}</p>
         </body></html>
       }
       response['Content-Type'] = 'text/html'
