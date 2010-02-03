@@ -7,12 +7,11 @@ class WebserverTest
   include TestHelper
 
   def initialize
-    @port = 8081
-    @server = Webserver.new(@port)
-    Thread.new { @server.start }
-
     @pages_directory = 'test_pages'
     @page_factory = PageFactory.new(PageFilePersistor.new(@pages_directory))
+    @port = 8081
+    @server = Webserver.new(@port, @page_factory)
+    Thread.new { @server.start }
   end
 
   def finding_a_static_page
@@ -44,12 +43,13 @@ class WebserverTest
   def tear_down
     print 'cleaning up after webserver tests ... '
 
+    @server.stop
+
     Dir.entries(@pages_directory).each do |filename|
       File.delete(File.join(@pages_directory, filename)) if filename.length > 2
     end
     Dir.delete(@pages_directory)
 
-    @server.stop
     puts 'finished'
   end
 

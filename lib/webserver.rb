@@ -17,7 +17,7 @@ class Webserver
   class WikiPageServlet < HTTPServlet::AbstractServlet
     def do_GET(request, response)
       page_title = Webserver.parse_title(request.path_info)
-      page_factory = PageFactory.new(PageFilePersistor.new('test_pages'))
+      page_factory = @options[0]
       page = page_factory.find_or_create(page_title)
       response.body = %Q{
         <html><body>
@@ -29,10 +29,10 @@ class Webserver
     end
   end
 
-  def initialize(port_number)
+  def initialize(port_number, page_factory)
     @server = WEBrick::HTTPServer.new(:Port => port_number)
     @server.mount('/helloworld', HelloWorldServlet)
-    @server.mount('/', WikiPageServlet)
+    @server.mount('/', WikiPageServlet, page_factory)
     trap('INT') { stop }
   end
 
