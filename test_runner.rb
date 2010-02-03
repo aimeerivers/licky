@@ -19,6 +19,9 @@ test.page_content_is_written_to_the_file
 test.page_content_is_read_from_the_file
 test.tear_down
 
+test = HtmlHelperTest.new
+test.converting_newlines_to_paragraphs
+
 test = WebserverTest.new
 test.finding_a_static_page
 test.parsing_page_title
@@ -33,4 +36,5 @@ test.creating_a_page
 test.editing_existing_page
 test.home_page_can_be_displayed
 test.home_page_can_be_edited
+test.converting_newlines_to_new_paragraphs
 test.tear_down

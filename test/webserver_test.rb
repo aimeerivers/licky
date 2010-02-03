@@ -102,6 +102,12 @@ class WebserverTest
     assert_contains(response.body, page.content)
   end
 
+  def converting_newlines_to_new_paragraphs
+    page = create_page("newlines", "Line one\r\n\r\nLine two")
+    response = get '/newlines'
+    assert_contains(response.body, "<p>Line one</p><p>Line two</p>")
+  end
+
   def tear_down
     print 'cleaning up after webserver tests ... '
 

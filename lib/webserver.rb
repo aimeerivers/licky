@@ -1,4 +1,5 @@
 require 'webrick'
+require 'lib/html_helper'
 
 class Webserver
   include WEBrick
@@ -62,7 +63,7 @@ class Webserver
         }
       else
         response.body += %{
-          <p>#{page.content}</p>
+          <p>#{HtmlHelper.to_html(page.content)}</p>
           <p><a href="/edit#{path}">Edit this page</a></p>
         }
       end
