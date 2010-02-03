@@ -79,6 +79,23 @@ class WebserverTest
     assert_contains(response.body, "<input")
   end
 
+  def home_page_can_be_displayed
+    page = create_page('Home page', "This is the home page")
+    response = get '/'
+    assert_contains(response.body, "Home page")
+    assert_contains(response.body, page.content)
+    assert_contains(response.body, %{<a href="/edit/Home_page">Edit this page</a>})
+  end
+
+  def home_page_can_be_edited
+    page = create_page('Home page', "This is the home page")
+    response = get '/edit'
+    assert_contains(response.body, "Edit Home page")
+    assert_contains(response.body, "<form")
+    assert_contains(response.body, "<textarea")
+    assert_contains(response.body, page.content)
+  end
+
   def tear_down
     print 'cleaning up after webserver tests ... '
 

@@ -17,7 +17,8 @@ class Webserver
   class EditWikiPageServlet < HTTPServlet::AbstractServlet
     def do_GET(request, response)
       path = request.path_info.sub('/edit', '')
-      page_title = Webserver.parse_title(request.path_info)
+      path = '/Home_page' if path == '' || path == '/'
+      page_title = Webserver.parse_title(path)
       page_factory = @options[0]
       page = page_factory.find_or_create(page_title)
       response.body = %{
@@ -36,7 +37,9 @@ class Webserver
 
   class WikiPageServlet < HTTPServlet::AbstractServlet
     def do_GET(request, response)
-      page_title = Webserver.parse_title(request.path_info)
+      path = request.path_info
+      path = '/Home_page' if path == '/'
+      page_title = Webserver.parse_title(path)
       page_factory = @options[0]
       page = page_factory.find_or_create(page_title)
       response.body = %{
@@ -47,7 +50,7 @@ class Webserver
       if page.new_page?
         response.body += %{
           <p>This page does not exist. You can create it now.</p>
-          <form action="#{request.path_info}" method="POST">
+          <form action="#{path}" method="POST">
             <textarea rows="30" cols="100" name="content"></textarea>
             <br />
             <input type="submit" value="Create page" />
@@ -56,7 +59,7 @@ class Webserver
       else
         response.body += %{
           <p>#{page.content}</p>
-          <p><a href="/edit#{request.path_info}">Edit this page</a></p>
+          <p><a href="/edit#{path}">Edit this page</a></p>
         }
       end
 
