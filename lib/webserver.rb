@@ -51,6 +51,7 @@ class Webserver
       page = page_factory.find_or_create(page_title)
       page.content = request.query['content']
       page_factory.save_page(page)
+      response.set_redirect(WEBrick::HTTPStatus::Found, request.path_info)
     end
   end
 
