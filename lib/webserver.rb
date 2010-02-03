@@ -27,8 +27,8 @@ class Webserver
       if page.new_page?
         response.body += %{
           <p>This page does not exist. You can create it now.</p>
-          <form>
-            <textarea rows="30" cols="100"></textarea>
+          <form action="#{request.path_info}" method="POST">
+            <textarea rows="30" cols="100" name="content"></textarea>
             <br />
             <input type="submit" value="Create page" />
           </form>
@@ -43,6 +43,14 @@ class Webserver
         </body></html>
       }
       response['Content-Type'] = 'text/html'
+    end
+
+    def do_POST(request, response)
+      page_title = Webserver.parse_title(request.path_info)
+      page_factory = @options[0]
+      page = page_factory.find_or_create(page_title)
+      page.content = request.query['content']
+      page_factory.save_page(page)
     end
   end
 

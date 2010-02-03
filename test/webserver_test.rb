@@ -52,6 +52,13 @@ class WebserverTest
     assert_contains(response.body, "<input")
   end
 
+  def creating_a_page
+    post '/New_page', 'content' => 'CAN HAZ NEW PAGE PLZ'
+    response = get '/New_page'
+    assert_contains(response.body, "New page")
+    assert_contains(response.body, "CAN HAZ NEW PAGE PLZ")
+  end
+
   def tear_down
     print 'cleaning up after webserver tests ... '
 
@@ -73,6 +80,11 @@ class WebserverTest
     content = Net::HTTP.start(url.host, url.port) do |http|
       http.request(request)
     end
+  end
+
+  def post(resource, params)
+    url = URI.parse("http://localhost:#{@port}#{resource}")
+    content = Net::HTTP.post_form(url, params)
   end
 
 end
