@@ -36,6 +36,7 @@ class WebserverTest
 
   def displaying_title_on_the_page
     response = get '/Test_page'
+    assert_contains(response.body, '<title>Test page</title>')
     assert_contains(response.body, 'Test page')
   end
 
@@ -73,6 +74,7 @@ class WebserverTest
   def editing_existing_page
     page = create_page('Tuesday', "Tuesday's child is full of grace")
     response = get '/edit/Tuesday'
+    assert_contains(response.body, '<title>Edit Tuesday</title>')
     assert_contains(response.body, "<form")
     assert_contains(response.body, "<textarea")
     assert_contains(response.body, page.content)

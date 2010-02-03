@@ -22,7 +22,9 @@ class Webserver
       page_factory = @options[0]
       page = page_factory.find_or_create(page_title)
       response.body = %{
-        <html><body>
+        <html>
+        <head><title>Edit #{page_title}</title></head>
+        <body>
           <h1>Edit #{page_title}</h1>
           <form action="#{path}" method="POST">
             <textarea rows="30" cols="100" name="content">#{page.content}</textarea>
@@ -43,7 +45,9 @@ class Webserver
       page_factory = @options[0]
       page = page_factory.find_or_create(page_title)
       response.body = %{
-        <html><body>
+        <html>
+        <head><title>#{page_title}</title></head>
+        <body>
           <h1>#{page_title}</h1>
       }
       
