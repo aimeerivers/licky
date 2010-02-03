@@ -27,6 +27,11 @@ class Webserver
       if page.new_page?
         response.body += %{
           <p>This page does not exist. You can create it now.</p>
+          <form>
+            <textarea rows="30" cols="100"></textarea>
+            <br />
+            <input type="submit" value="Create page" />
+          </form>
         }
       else
         response.body += %{

@@ -45,6 +45,13 @@ class WebserverTest
     assert_contains(response.body, "This page does not exist. You can create it now.")
   end
 
+  def showing_a_form_to_create_a_page
+    response = get '/Nonexistent'
+    assert_contains(response.body, "<form")
+    assert_contains(response.body, "<textarea")
+    assert_contains(response.body, "<input")
+  end
+
   def tear_down
     print 'cleaning up after webserver tests ... '
 

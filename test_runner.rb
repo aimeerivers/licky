@@ -26,4 +26,5 @@ test.parsing_a_complex_page_title
 test.displaying_title_on_the_page
 test.displaying_content_for_existing_page
 test.showing_a_page_that_does_not_exist_yet
+test.showing_a_form_to_create_a_page
 test.tear_down
