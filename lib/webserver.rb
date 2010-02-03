@@ -14,6 +14,26 @@ class Webserver
     end
   end
 
+  class EditWikiPageServlet < HTTPServlet::AbstractServlet
+    def do_GET(request, response)
+      path = request.path_info.sub('/edit', '')
+      page_title = Webserver.parse_title(request.path_info)
+      page_factory = @options[0]
+      page = page_factory.find_or_create(page_title)
+      response.body = %{
+        <html><body>
+          <h1>Edit #{page_title}</h1>
+          <form action="#{path}" method="POST">
+            <textarea rows="30" cols="100" name="content">#{page.content}</textarea>
+            <br />
+            <input type="submit" value="Update page" />
+          </form>
+        </body></html>
+      }
+      response['Content-Type'] = 'text/html'
+    end
+  end
+
   class WikiPageServlet < HTTPServlet::AbstractServlet
     def do_GET(request, response)
       page_title = Webserver.parse_title(request.path_info)
@@ -36,6 +56,7 @@ class Webserver
       else
         response.body += %{
           <p>#{page.content}</p>
+          <p><a href="/edit#{request.path_info}">Edit this page</a></p>
         }
       end
 
@@ -58,6 +79,7 @@ class Webserver
   def initialize(port_number, page_factory)
     @server = WEBrick::HTTPServer.new(:Port => port_number)
     @server.mount('/helloworld', HelloWorldServlet)
+    @server.mount('/edit/', EditWikiPageServlet, page_factory)
     @server.mount('/', WikiPageServlet, page_factory)
     trap('INT') { stop }
   end

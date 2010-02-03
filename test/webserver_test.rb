@@ -14,6 +14,13 @@ class WebserverTest
     Thread.new { @server.start }
   end
 
+  def create_page(title, content)
+    page = @page_factory.find_or_create(title)
+    page.content = content
+    @page_factory.save_page(page)
+    page
+  end
+
   def finding_a_static_page
     response = get '/helloworld'
     assert_contains(response.body, '<h1>Hello world</h1>')
@@ -33,11 +40,15 @@ class WebserverTest
   end
 
   def displaying_content_for_existing_page
-    page = @page_factory.find_or_create('Monday')
-    page.content = "Monday's child is fair of face"
-    @page_factory.save_page(page)
+    page = create_page('Monday', "Monday's child is fair of face")
     response = get '/Monday'
     assert_contains(response.body, page.content)
+  end
+
+  def existing_page_shows_an_edit_link
+    page = create_page('Wednesday', "Wednesday's child is full of woe")
+    response = get '/Wednesday'
+    assert_contains(response.body, %{<a href="/edit/Wednesday">Edit this page</a>})
   end
 
   def showing_a_page_that_does_not_exist_yet
@@ -57,6 +68,15 @@ class WebserverTest
     response = get '/New_page'
     assert_contains(response.body, "New page")
     assert_contains(response.body, "CAN HAZ NEW PAGE PLZ")
+  end
+
+  def editing_existing_page
+    page = create_page('Tuesday', "Tuesday's child is full of grace")
+    response = get '/edit/Tuesday'
+    assert_contains(response.body, "<form")
+    assert_contains(response.body, "<textarea")
+    assert_contains(response.body, page.content)
+    assert_contains(response.body, "<input")
   end
 
   def tear_down
