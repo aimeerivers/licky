@@ -7,4 +7,8 @@ class Page
     @content = content
   end
 
+  def new_page?
+    @content.nil?
+  end
+
 end

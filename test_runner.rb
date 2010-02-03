@@ -3,6 +3,7 @@ Dir[File.dirname(__FILE__) + '/test/*.rb'].each {|file| require file }
 test = PageTest.new
 test.creating_a_new_page_using_the_factory
 test.page_has_no_content_to_start_with
+test.page_with_no_content_is_considered_a_new_page
 test.page_can_be_given_content
 
 test = PageFilePersistorTest.new
@@ -24,4 +25,5 @@ test.parsing_page_title
 test.parsing_a_complex_page_title
 test.displaying_title_on_the_page
 test.displaying_content_for_existing_page
+test.showing_a_page_that_does_not_exist_yet
 test.tear_down

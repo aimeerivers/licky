@@ -19,6 +19,11 @@ class PageTest
     assert_equal(p.content, nil)
   end
 
+  def page_with_no_content_is_considered_a_new_page
+    p = @page_factory.find_or_create('No Content')
+    assert_true(p.new_page?)
+  end
+
   def page_can_be_given_content
     p = @page_factory.find_or_create('With Content')
     p.content = 'Lorem ipsum'

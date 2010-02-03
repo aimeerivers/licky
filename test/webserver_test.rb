@@ -40,6 +40,11 @@ class WebserverTest
     assert_contains(response.body, page.content)
   end
 
+  def showing_a_page_that_does_not_exist_yet
+    response = get '/Nonexistent'
+    assert_contains(response.body, "This page does not exist. You can create it now.")
+  end
+
   def tear_down
     print 'cleaning up after webserver tests ... '
 

@@ -19,10 +19,22 @@ class Webserver
       page_title = Webserver.parse_title(request.path_info)
       page_factory = @options[0]
       page = page_factory.find_or_create(page_title)
-      response.body = %Q{
+      response.body = %{
         <html><body>
           <h1>#{page_title}</h1>
+      }
+      
+      if page.new_page?
+        response.body += %{
+          <p>This page does not exist. You can create it now.</p>
+        }
+      else
+        response.body += %{
           <p>#{page.content}</p>
+        }
+      end
+
+      response.body += %{
         </body></html>
       }
       response['Content-Type'] = 'text/html'
