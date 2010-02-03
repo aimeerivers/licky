@@ -34,6 +34,10 @@ class WebserverTest
     assert_equal(Webserver.parse_title('/Ha_ha__/ha 24?! yay'), 'Ha ha ha 24 yay')
   end
 
+  def removing_excess_whitespace_from_the_end_of_the_title
+    assert_equal(Webserver.parse_title('/aimee/ '), 'aimee')
+  end
+
   def displaying_title_on_the_page
     response = get '/Test_page'
     assert_contains(response.body, '<title>Test page</title>')

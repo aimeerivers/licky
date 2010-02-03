@@ -100,7 +100,7 @@ class Webserver
   end
   
   def self.parse_title(title)
-    title.sub('/', '').gsub(/[^\da-zA-Z]+/, ' ')
+    title.sub('/', '').gsub(/[^\da-zA-Z]+/, ' ').sub(/\s*$/, '')
   end
 
 end

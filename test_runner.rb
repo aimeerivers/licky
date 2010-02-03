@@ -23,6 +23,7 @@ test = WebserverTest.new
 test.finding_a_static_page
 test.parsing_page_title
 test.parsing_a_complex_page_title
+test.removing_excess_whitespace_from_the_end_of_the_title
 test.displaying_title_on_the_page
 test.displaying_content_for_existing_page
 test.existing_page_shows_an_edit_link
