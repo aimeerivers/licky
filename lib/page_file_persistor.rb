@@ -1,3 +1,5 @@
+require 'lib/text_helper'
+
 class PageFilePersistor
 
   def initialize(pages_directory)
@@ -18,7 +20,7 @@ class PageFilePersistor
   end
 
   def filename_for(title)
-    title.gsub(/\s+/, '_') + '.txt'
+    TextHelper.underscore(title) + '.txt'
   end
 
 end

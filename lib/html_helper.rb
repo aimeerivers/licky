@@ -1,10 +1,11 @@
+require 'lib/text_helper'
+
 module HtmlHelper
 
   SUBSTITUTIONS = [
     ['&', '&amp;'],
     ['<', '&lt;'],
     ['>', '&gt;'],
-    [/\[\[(\w+)\]\]/, '<a href=\'/\1\'>\1</a>'],
     ["\r\n\r\n","</p><p>"]
   ]
 
@@ -13,7 +14,10 @@ module HtmlHelper
     SUBSTITUTIONS.each do |substitution|
       result.gsub!(substitution[0], substitution[1])
     end
-    result
+
+    result.gsub(/\[\[(.+)\]\]/) do
+      "<a href='/#{TextHelper.underscore($1)}'>#{$1}</a>"
+    end
   end
 
 end

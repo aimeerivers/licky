@@ -21,6 +21,7 @@ class HtmlHelperTest
 
   def linking_to_other_wiki_pages
     assert_equal(parse('[[aimee]]'), "<a href='/aimee'>aimee</a>")
+    assert_equal(parse('back to the [[home page]]'), "back to the <a href='/home_page'>home page</a>")
   end
 
   private

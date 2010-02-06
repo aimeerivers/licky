@@ -6,6 +6,9 @@ test.page_has_no_content_to_start_with
 test.page_with_no_content_is_considered_a_new_page
 test.page_can_be_given_content
 
+test = TextHelperTest.new
+test.turning_spaces_to_underscores
+
 test = PageFilePersistorTest.new
 test.figuring_out_filename_with_just_one_word
 test.figuring_out_filename_with_more_than_one_word
