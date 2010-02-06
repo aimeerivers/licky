@@ -40,6 +40,7 @@ test.showing_a_page_that_does_not_exist_yet
 test.showing_a_form_to_create_a_page
 test.creating_a_page
 test.editing_existing_page
+test.cancel_link_when_editing_a_page
 test.home_page_can_be_displayed
 test.home_page_can_be_edited
 test.converting_newlines_to_new_paragraphs

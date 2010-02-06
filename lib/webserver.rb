@@ -31,6 +31,7 @@ class Webserver
             <textarea rows="30" cols="100" name="content">#{page.content}</textarea>
             <br />
             <input type="submit" value="Update page" />
+            <a href='#{path}'>Cancel</a>
           </form>
         </body></html>
       }

@@ -85,6 +85,12 @@ class WebserverTest
     assert_contains(response.body, "<input")
   end
 
+  def cancel_link_when_editing_a_page
+    page = create_page('Friday', "Friday's child is good and gay")
+    response = get '/edit/Friday'
+    assert_contains(response.body, "<a href='/Friday'>Cancel</a>")
+  end
+
   def home_page_can_be_displayed
     page = create_page('Home page', "This is the home page")
     response = get '/'
