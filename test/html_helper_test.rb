@@ -9,4 +9,9 @@ class HtmlHelperTest
     assert_equal(result, "line one</p><p>line two</p><p>line three")
   end
 
+  def sanitising_html
+    result = HtmlHelper.to_html("<script type='text/javascript'>alert('hi');</script>")
+    assert_equal(result, "&lt;script type='text/javascript'&gt;alert('hi');&lt;/script&gt;")
+  end
+
 end
