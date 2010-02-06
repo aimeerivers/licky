@@ -19,6 +19,10 @@ class HtmlHelperTest
     assert_equal(result, "Jane &amp; Michelle")
   end
 
+  def linking_to_other_wiki_pages
+    assert_equal(parse('[[aimee]]'), "<a href='/aimee'>aimee</a>")
+  end
+
   private
 
   def parse(text)
