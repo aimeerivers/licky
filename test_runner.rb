@@ -22,6 +22,7 @@ test.tear_down
 test = HtmlHelperTest.new
 test.converting_newlines_to_paragraphs
 test.sanitising_html
+test.parsing_ampersand_characters
 
 test = WebserverTest.new
 test.finding_a_static_page

@@ -1,6 +1,7 @@
 module HtmlHelper
 
   SUBSTITUTIONS = [
+    ['&', '&amp;'],
     ['<', '&lt;'],
     ['>', '&gt;'],
     ["\r\n\r\n","</p><p>"]
